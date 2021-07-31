@@ -76,6 +76,51 @@ const styles = StyleSheet.create({
     right: 0,
     width: '95%',
     height: '100%'
+  },
+  viewContainer: {
+    flex: 1,
+    marginTop: SIZES.padding,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    backgroundColor: COLORS.white,
+    flexDirection: 'row'
+  },
+  labelContainer: {
+    width: 70,
+    marginLeft: SIZES.base
+  },
+  label: {
+    width: '100%',
+    height: '100%'
+  },
+  bottomContainer: {
+    flex: 1,
+    paddingBottom: SIZES.padding
+  },
+  itemContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  itemInner: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  itemImage: {
+    width: 130,
+    height: 100
+  },
+  itemWords: {
+    flex: 1.5,
+    marginLeft: SIZES.radius,
+    justifyContent: 'center'
+  },
+  itemName: {
+    color: COLORS.gray,
+    ...FONTS.body3
+  },
+  itemPrice: {
+    ...FONTS.h3
   }
 });
 
