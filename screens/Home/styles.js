@@ -121,6 +121,20 @@ const styles = StyleSheet.create({
   },
   itemPrice: {
     ...FONTS.h3
+  },
+  sizeBtn: {
+    width: 35,
+    height: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 5,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: COLORS.white,
+    borderRadius: 5
+  },
+  sizeTxt: {
+    ...FONTS.body4
   }
 });
 

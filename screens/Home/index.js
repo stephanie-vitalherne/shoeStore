@@ -1,15 +1,20 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable comma-dangle */
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
-import { COLORS, SIZES, FONTS, images, icons } from '../../constants';
+import { COLORS, SIZES, images } from '../../constants';
 import Svg, { Polygon } from 'react-native-svg';
 import { styles } from './styles';
 
 import { data, bottomShoes } from './data';
+import { ShoeModal } from '../../components';
 
 const Home = () => {
-  const [trending, setTrending] = useState(data);
-  const [recentlyViewed, setRecentlyViewed] = useState(bottomShoes);
+  const [trending] = useState(data);
+  const [recentlyViewed] = useState(bottomShoes);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedSize, setSelectedSize] = useState('');
 
   function renderShoes(item, index) {
     var trendStyle = {};
@@ -18,7 +23,12 @@ const Home = () => {
     }
 
     return (
-      <TouchableOpacity style={[styles.shoeContainer, { ...trendStyle }]}>
+      <TouchableOpacity
+        style={[styles.shoeContainer, { ...trendStyle }]}
+        onPress={() => {
+          setSelectedItem(item);
+          setShowAddModal(true);
+        }}>
         <Text style={styles.shoeCategory}>{item.type}</Text>
         <View
           style={[
@@ -46,7 +56,8 @@ const Home = () => {
       <TouchableOpacity
         style={styles.itemContainer}
         onPress={() => {
-          console.log('Recent');
+          setSelectedItem(item);
+          setShowAddModal(true);
         }}>
         {/* Image */}
         <View style={styles.itemInner}>
@@ -64,6 +75,36 @@ const Home = () => {
         </View>
       </TouchableOpacity>
     );
+  }
+
+  function renderSizes() {
+    return selectedItem.sizes.map((item, index) => {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={[
+            styles.sizeBtn,
+            {
+              backgroundColor:
+                selectedItem.sizes[index] === selectedSize ? COLORS.white : null
+            }
+          ]}
+          onPress={() => setSelectedSize(item)}>
+          <Text
+            style={[
+              styles.sizeTxt,
+              {
+                color:
+                  selectedItem.sizes[index] === selectedSize
+                    ? COLORS.black
+                    : COLORS.white
+              }
+            ]}>
+            {item}
+          </Text>
+        </TouchableOpacity>
+      );
+    });
   }
 
   return (
@@ -99,6 +140,24 @@ const Home = () => {
           />
         </View>
       </View>
+
+      {/* Modal */}
+      {selectedItem && (
+        <ShoeModal
+          name={selectedItem.name}
+          type={selectedItem.type}
+          price={selectedItem.price}
+          showAddModal={showAddModal}
+          bgColor={selectedItem.bgColor}
+          selectedItem={selectedItem.img}
+          onClosePress={() => {
+            setSelectedItem(null);
+            setSelectedSize('');
+            setShowAddModal(false);
+          }}
+          renderSizes={renderSizes()}
+        />
+      )}
     </View>
   );
 };
